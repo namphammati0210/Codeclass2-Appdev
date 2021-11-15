@@ -1,1 +1,34 @@
-<h1>Hello world. This is admin page</h1>
+<div class="container-fluid">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th scope="col">Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% trainerAccounts.forEach(trainerAccount=> { %>
+        <tr>
+          <th scope="row">
+            <%= trainerAccount.id%>
+          </th>
+          <td>
+            <%= trainerAccount.username%>
+          </td>
+          <td>
+            <%= trainerAccount.password%>
+          </td>
+          <td>
+            <%= trainerAccount.Role.name%>
+          </td>
+        </tr>
+        <% }) %>
+
+
+    </tbody>
+  </table>
+
+
+</div>
