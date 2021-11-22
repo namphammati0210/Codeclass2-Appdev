@@ -6,7 +6,7 @@ const database = require('../database/models/index');
 
 const {Trainer, Account, Role} = database.db;
 
-/* GET home page. */
+/* Trainer routes */
 router.get('/', async function(req, res, next) {
   const trainerAccounts = await Account.findAll({
     include: {
@@ -86,6 +86,40 @@ router.post('/addTrainer', async (req, res) => {
     await t.rollback();
     res.redirect('/admin/createTrainer');
   }
+})
+
+router.get('/viewTrainer/:userId', async(req, res) => {
+  const {userId} = req.params; 
+  const trainer = await Trainer.findOne({
+    where: {
+      id: userId
+    }
+  })
+
+  res.render('templates/master', { 
+    title: 'View trainer',
+    content: '../trainer_view/view',
+    trainer,
+  });
+})
+
+router.get('/deleteTrainer/:id/:userId', async(req, res) => {
+  const {id, userId} = req.params;
+
+  const deletedTrainer = await Trainer.destroy({
+    where: {
+      id: userId
+    }
+  })
+
+  const deletedTrainerAccount = await Account.destroy({
+    where: {
+      id: id
+    }
+  })
+
+  res.redirect('/admin');
+  
 })
 
 module.exports = router;

@@ -1,11 +1,14 @@
 <div class="container-fluid">
   <table class="table">
+    <a href="/admin/createTrainer" class="btn btn-success">Create trainer</a>
     <thead class="thead-dark">
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Username</th>
         <th scope="col">Password</th>
         <th scope="col">Role</th>
+        <th scope="col">View</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +25,12 @@
           </td>
           <td>
             <%= trainerAccount.Role.name%>
+          </td>
+          <td>
+            <a href="/admin/viewTrainer/<%= trainerAccount.userId%>" class="btn btn-primary">View details</a>
+          </td>
+          <td>
+            <a href="/admin/deleteTrainer/<%= trainerAccount.id%>/<%= trainerAccount.userId%>" class="btn btn-danger">Delete</a>
           </td>
         </tr>
         <% }) %>
