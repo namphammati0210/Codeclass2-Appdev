@@ -1,6 +1,5 @@
 const database = require('../database/models/index');
 const sequelize = database.db.sequelize;
-const {Trainer, Account} = database.db;
 const RoleService = require('../services/roleService');
 const TrainerService = require('../services/trainerService');
 const AccountService = require('../services/accountService');
@@ -17,36 +16,39 @@ const renderCreateView = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    var t = await sequelize.transaction();
+    let data;
+    var transaction = await sequelize.transaction();
 
     const {
       username, password, fullname, specialty, age, address, email, roleId
     } = req.body;
   
     // Create trainer's info
-    const trainer = await Trainer.create({
+    data = {
       fullname,
       specialty,
       age,
       address,
       email
-    }, {transaction: t})
-  
-    // Create trainer's account   
-    const trainerAccount = await Account.create({
+    }
+    const trainer = await TrainerService.create(data, transaction);
+
+    // Create trainer's account
+    data = {
       username,
       password,
       userId: trainer.id,
-      roleId
-    }, {transaction: t})
-
+      roleId,
+    }
+    const trainerAccount = await AccountService.create(data, transaction);
+        
     // If Everything work fine
-    await t.commit();
+    await transaction.commit();
     res.redirect('/admin');
    
   } catch (error) {
     console.log("🚀 ~ file: admin.js ~ line 51 ~ router.post ~ error", error);
-    await t.rollback();
+    await transaction.rollback();
     res.redirect('/admin/createTrainer');
   }
 }

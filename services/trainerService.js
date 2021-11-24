@@ -1,5 +1,4 @@
 const database = require('../database/models/index');
-const sequelize = database.db.sequelize;
 const { Trainer } = database.db;
 
 const findTrainerById = async (id) => {
@@ -22,7 +21,13 @@ const deleteById = async (id) => {
   return deletedTrainer;
 }
 
+const create = async (data, transaction) => {
+  const trainer = await Trainer.create(data, {transaction});
+  return trainer;
+}
+
 module.exports = {
   findTrainerById,
-  deleteById
+  deleteById,
+  create
 }

@@ -1,5 +1,4 @@
 const database = require('../database/models/index');
-const sequelize = database.db.sequelize;
 const { Account } = database.db;
 
 const findById = async (id) => {
@@ -32,8 +31,14 @@ const changePassById = async (id, newPassword) => {
   return newAccount;
 }
 
+const create = async (data, transaction) => {
+  const account = await Account.create(data, {transaction});
+  return account;
+}
+
 module.exports = {
   deleteById,
   findById,
-  changePassById
+  changePassById,
+  create
 }
