@@ -8,6 +8,7 @@
         <th scope="col">Password</th>
         <th scope="col">Role</th>
         <th scope="col">View</th>
+        <th scope="col">Change password</th>
         <th scope="col">Delete</th>
       </tr>
     </thead>
@@ -28,6 +29,9 @@
           </td>
           <td>
             <a href="/admin/viewTrainer/<%= trainerAccount.userId%>" class="btn btn-primary">View details</a>
+          </td>
+          <td>
+            <a href="/admin/changePass/<%= trainerAccount.id%>" class="btn btn-warning">Change Password</a>
           </td>
           <td>
             <a href="/admin/deleteTrainer/<%= trainerAccount.id%>/<%= trainerAccount.userId%>" class="btn btn-danger">Delete</a>

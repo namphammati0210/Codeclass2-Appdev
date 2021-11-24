@@ -39,7 +39,6 @@ router.get('/createTrainer', async (req, res) => {
   });
 })
 
-
 router.post('/addTrainer', async (req, res) => {
   try {
     var t = await sequelize.transaction();
@@ -120,6 +119,43 @@ router.get('/deleteTrainer/:id/:userId', async(req, res) => {
 
   res.redirect('/admin');
   
+})
+
+
+// Change trainer's password and staff's password
+router.get('/changePass/:id', async (req, res) => { 
+  const { id } = req.params;
+
+  const account = await Account.findOne({
+    attributes: ['id', 'password'],
+    where: {
+      id
+    }
+  })
+
+  res.render('templates/master', { 
+    title: 'Change password',
+    content: '../account_view/changePass',
+    account,
+  });
+})
+
+router.post('/updatePass', async (req, res) => {
+  // res.send(req.body);
+  const { id, newPassword, confirmPassword } = req.body;
+
+  // Validation: check if new password equal confirm password
+  if(newPassword !== confirmPassword) {
+    return res.redirect(`/admin/changePass/${id}`);  // ~ ``
+  }
+
+  const newAccount = await Account.update({ password: newPassword}, {
+    where: {
+      id
+    }
+  });
+
+  return res.redirect('/admin');
 })
 
 module.exports = router;
