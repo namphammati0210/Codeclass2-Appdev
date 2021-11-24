@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const {db} = require('../database/models/index')
-const sequelize = db.sequelize;
 const database = require('../database/models/index');
-
-const {Trainer, Account, Role} = database.db;
+const {Account, Role} = database.db;
+const TrainerController = require('../controllers/trainerController');
+const AccountController = require('../controllers/accountController');
 
 /* Trainer routes */
 router.get('/', async function(req, res, next) {
@@ -24,138 +23,18 @@ router.get('/', async function(req, res, next) {
   });
 });
 
-router.get('/createTrainer', async (req, res) => {
+router.get('/createTrainer', TrainerController.renderCreateView);
 
-  const trainerRole = await Role.findOne({
-    where: {
-      name: 'trainer'
-    }
-  })
+router.post('/addTrainer', TrainerController.create);
 
-  res.render('templates/master', { 
-    title: 'Create trainer page',
-    content: '../trainer_view/create',
-    roleId: trainerRole.id  
-  });
-})
+router.get('/viewTrainer/:userId', TrainerController.view)
 
-router.post('/addTrainer', async (req, res) => {
-  try {
-    var t = await sequelize.transaction();
-
-    const {
-      username, password, fullname, specialty, age, address, email, roleId
-    } = req.body;
-  
-    // Create trainer's info
-    const trainer = await Trainer.create({
-      fullname,
-      specialty,
-      age,
-      address,
-      email
-    }, {transaction: t})
-
-    // If create trainer's info failed then back to the create trainer page
-    if(!trainer) {
-      await t.rollback();
-      res.redirect('/admin/createTrainer') // body guard
-    }
-  
-    // Create trainer's account   
-    const trainerAccount = await Account.create({
-      username,
-      password,
-      userId: trainer.id,
-      roleId
-    }, {transaction: t})
-
-    // If create trainer's account failed then back to the create trainer page
-    if(!trainerAccount) {
-      await t.rollback();
-      res.redirect('/admin/createTrainer')
-    }
-
-    // If Everything work fine
-    await t.commit();
-    res.redirect('/admin');
-   
-  } catch (error) {
-    console.log("🚀 ~ file: admin.js ~ line 51 ~ router.post ~ error", error);
-    await t.rollback();
-    res.redirect('/admin/createTrainer');
-  }
-})
-
-router.get('/viewTrainer/:userId', async(req, res) => {
-  const {userId} = req.params; 
-  const trainer = await Trainer.findOne({
-    where: {
-      id: userId
-    }
-  })
-
-  res.render('templates/master', { 
-    title: 'View trainer',
-    content: '../trainer_view/view',
-    trainer,
-  });
-})
-
-router.get('/deleteTrainer/:id/:userId', async(req, res) => {
-  const {id, userId} = req.params;
-
-  const deletedTrainer = await Trainer.destroy({
-    where: {
-      id: userId
-    }
-  })
-
-  const deletedTrainerAccount = await Account.destroy({
-    where: {
-      id: id
-    }
-  })
-
-  res.redirect('/admin');
-  
-})
+router.get('/deleteTrainer/:id/:userId', TrainerController.destroy)
 
 
 // Change trainer's password and staff's password
-router.get('/changePass/:id', async (req, res) => { 
-  const { id } = req.params;
+router.get('/changePass/:id', AccountController.renderChangePass)
 
-  const account = await Account.findOne({
-    attributes: ['id', 'password'],
-    where: {
-      id
-    }
-  })
-
-  res.render('templates/master', { 
-    title: 'Change password',
-    content: '../account_view/changePass',
-    account,
-  });
-})
-
-router.post('/updatePass', async (req, res) => {
-  // res.send(req.body);
-  const { id, newPassword, confirmPassword } = req.body;
-
-  // Validation: check if new password equal confirm password
-  if(newPassword !== confirmPassword) {
-    return res.redirect(`/admin/changePass/${id}`);  // ~ ``
-  }
-
-  const newAccount = await Account.update({ password: newPassword}, {
-    where: {
-      id
-    }
-  });
-
-  return res.redirect('/admin');
-})
+router.post('/updatePass', AccountController.changePass)
 
 module.exports = router;
