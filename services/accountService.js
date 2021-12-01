@@ -1,5 +1,18 @@
 const database = require('../database/models/index');
-const { Account } = database.db;
+const { Account, Role } = database.db;
+
+const findAllByRole = async (roleName) => {
+  const accounts = await Account.findAll({
+    include: {
+      model: Role,
+      where: {
+        name: roleName
+      }
+    },
+  })
+
+  return accounts;
+}
 
 const findById = async (id) => {
   const account = await Account.findOne({
@@ -40,5 +53,6 @@ module.exports = {
   deleteById,
   findById,
   changePassById,
-  create
+  create,
+  findAllByRole
 }

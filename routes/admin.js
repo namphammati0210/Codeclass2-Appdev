@@ -4,24 +4,10 @@ const database = require('../database/models/index');
 const {Account, Role} = database.db;
 const TrainerController = require('../controllers/trainerController');
 const AccountController = require('../controllers/accountController');
+const AdminController = require('../controllers/adminController');
 
 /* Trainer routes */
-router.get('/', async function(req, res, next) {
-  const trainerAccounts = await Account.findAll({
-    include: {
-      model: Role,
-      where: {
-        name: 'trainer'
-      }
-    },
-  })
-
-  res.render('templates/master', { 
-    title: 'Admin page', 
-    content: '../admin_view/index',
-    trainerAccounts
-  });
-});
+router.get('/', AdminController.index);
 
 router.get('/createTrainer', TrainerController.renderCreateView);
 
