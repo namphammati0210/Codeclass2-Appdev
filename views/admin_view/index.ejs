@@ -43,5 +43,49 @@
     </tbody>
   </table>
 
+  <table class="table">
+    <a href="/admin/createStaff" class="btn btn-success">Create staff</a>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th scope="col">Role</th>
+        <th scope="col">View</th>
+        <th scope="col">Change password</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% staffAccounts.forEach(staffAccount=> { %>
+        <tr>
+          <th scope="row">
+            <%= staffAccount.id%>
+          </th>
+          <td>
+            <%= staffAccount.username%>
+          </td>
+          <td>
+            <%= staffAccount.password%>
+          </td>
+          <td>
+            <%= staffAccount.Role.name%>
+          </td>
+          <td>
+            <a href="/admin/viewStaff/<%= staffAccount.userId%>" class="btn btn-primary">View details</a>
+          </td>
+          <td>
+            <a href="/admin/changePass/<%= staffAccount.id%>" class="btn btn-warning">Change Password</a>
+          </td>
+          <td>
+            <a href="/admin/deleteStaff/<%= staffAccount.id%>/<%= staffAccount.userId%>" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+        <% }) %>
+
+
+    </tbody>
+  </table>
+
 
 </div>
