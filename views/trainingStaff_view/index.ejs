@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <table class="table">
+    <a href="/staff/createTrainee" class="btn btn-success">Create trainee</a>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th scope="col">Role</th>
+        <th scope="col">View</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% traineeAccounts.forEach(traineeAccount=> { %>
+        <tr>
+          <th scope="row">
+            <%= traineeAccount.id%>
+          </th>
+          <td>
+            <%= traineeAccount.username%>
+          </td>
+          <td>
+            <%= traineeAccount.password%>
+          </td>
+          <td>
+            <%= traineeAccount.Role.name%>
+          </td>
+          <td>
+            <a href="/staff/viewTrainee/<%= traineeAccount.userId%>" class="btn btn-primary">View details</a>
+          </td>
+          <td>
+            <a href="/staff/updateTrainee/<%= traineeAccount.userId%>" class="btn btn-warning">Update</a>
+          </td>
+          <td>
+            <a href="/staff/deleteTrainee/<%= traineeAccount.id%>/<%= traineeAccount.userId%>" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+
+
+
+</div>

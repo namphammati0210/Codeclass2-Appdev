@@ -53,7 +53,42 @@ const create = async (req, res) => {
   }
 }
 
+const renderUpdateView = async (req, res) => {
+  const { traineeId } = req.params; // method GET
+
+  const trainee = await TraineeService.findById(traineeId);
+
+  res.render('templates/master', { 
+    title: 'Update trainee page',
+    content: '../trainee_view/update',
+    trainee 
+  });
+}
+
+const update = async (req, res) => {
+  try {
+    const { id, name, age, email, dateOfBirth, education } = req.body; // method POST
+
+    const data = {
+      name,
+      age,
+      email,
+      dateOfBirth,
+      education
+    }
+
+    const updatedTrainee = await TraineeService.update(id, data);
+
+    res.redirect("/staff");
+
+  } catch (error) {
+    res.redirect(`/staff/updateTrainee/${id}`)
+  }
+}
+
 module.exports = {
   renderCreateView,
-  create
+  create,
+  renderUpdateView,
+  update
 }

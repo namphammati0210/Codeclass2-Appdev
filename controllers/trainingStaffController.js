@@ -4,6 +4,16 @@ const RoleService = require('../services/roleService');
 const AccountService = require('../services/accountService');
 const TrainingStaffService = require('../services/trainingStaffService');
 
+const index = async (req, res) => {
+  const traineeAccounts = await AccountService.findAllByRole('trainee');
+
+  res.render('templates/master', { 
+    title: 'Staff page', 
+    content: '../trainingStaff_view/index',
+    traineeAccounts
+  });
+}
+
 const renderCreateView = async (req, res) => {
   const staffRole = await RoleService.findRoleByName('trainingStaff');
 
@@ -77,5 +87,6 @@ module.exports = {
   renderCreateView,
   create,
   view,
-  destroy
+  destroy,
+  index
 }
