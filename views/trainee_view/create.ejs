@@ -1,0 +1,64 @@
+<form action="/staff/addTrainee" method="POST">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Username</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+      name="username"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1"
+      name="password"
+    >
+  </div>
+
+  <div class="form-group" style="display: none;">
+    <label for="exampleInputPassword1">Role ID</label>
+    <input type="number" class="form-control" id="exampleInputPassword1"
+      name="roleId"
+      value="<%= roleId %>"
+      readonly
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Name</label>
+    <input type="text" class="form-control" id="exampleInputPassword1"
+      name="name"
+    >
+  </div>
+
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Age</label>
+    <input type="number" class="form-control" id="exampleInputPassword1"
+      name="age"
+    >
+  </div>
+
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Email</label>
+    <input type="text" class="form-control" id="exampleInputPassword1"
+      name="email"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Date of Birth</label>
+    <input type="text" class="form-control" id="exampleInputPassword1"
+      name="dateOfBirth"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Education</label>
+    <input type="text" class="form-control" id="exampleInputPassword1"
+      name="education"
+    >
+  </div>
+
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
