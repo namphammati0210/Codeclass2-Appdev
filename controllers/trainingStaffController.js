@@ -3,14 +3,17 @@ const sequelize = database.db.sequelize;
 const RoleService = require('../services/roleService');
 const AccountService = require('../services/accountService');
 const TrainingStaffService = require('../services/trainingStaffService');
+const CourseCategoryService = require('../services/courseCategoryService');
 
 const index = async (req, res) => {
   const traineeAccounts = await AccountService.findAllByRole('trainee');
+  const categories = await CourseCategoryService.findAllCategoies();
 
   res.render('templates/master', { 
     title: 'Staff page', 
     content: '../trainingStaff_view/index',
-    traineeAccounts
+    traineeAccounts,
+    categories
   });
 }
 
