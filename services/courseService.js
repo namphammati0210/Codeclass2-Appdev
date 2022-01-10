@@ -1,13 +1,13 @@
 const database = require('../database/models/index');
-const { CourseCategory } = database.db;
+const { Course } = database.db;
 
 const create = async (data) => {
-  const courseCategory = await CourseCategory.create(data);
-  return courseCategory;
+  const course = await Course.create(data);
+  return course;
 }
 
-const findAllCategories = async () => {
-  const categories = await CourseCategory.findAll();
+const findAllCourses = async () => {
+  const categories = await Course.findAll();
   return categories;
 }
 
@@ -33,7 +33,7 @@ const update = async (id, data) => {
 
 module.exports = {
   create,
-  findAllCategories,
+  findAllCourses,
   findById,
   update
 }

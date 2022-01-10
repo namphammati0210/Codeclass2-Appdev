@@ -7,7 +7,7 @@ const CourseCategoryService = require('../services/courseCategoryService');
 
 const index = async (req, res) => {
   const traineeAccounts = await AccountService.findAllByRole('trainee');
-  const categories = await CourseCategoryService.findAllCategoies();
+  const categories = await CourseCategoryService.findAllCategories();
 
   res.render('templates/master', { 
     title: 'Staff page', 

@@ -3,6 +3,7 @@ var router = express.Router();
 const TraineeController = require('../controllers/traineeController');
 const TrainingStaffController = require('../controllers/trainingStaffController');
 const CourseCategoryController = require('../controllers/courseCategoryController');
+const CourseController = require('../controllers/courseController');
 
 /* GET home page. */
 router.get('/', TrainingStaffController.index);
@@ -20,5 +21,10 @@ router.post('/updateTrainee', TraineeController.update);
 router.get('/createCourseCategory', CourseCategoryController.renderCreateView);
 
 router.post('/addCourseCategory', CourseCategoryController.create);
+
+// Course section
+router.get('/createCourse', CourseController.renderCreateView);
+
+router.post('/addCourse', CourseController.create);
 
 module.exports = router;
