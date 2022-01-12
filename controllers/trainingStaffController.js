@@ -4,16 +4,19 @@ const RoleService = require('../services/roleService');
 const AccountService = require('../services/accountService');
 const TrainingStaffService = require('../services/trainingStaffService');
 const CourseCategoryService = require('../services/courseCategoryService');
+const CourseService = require('../services/courseService');
 
 const index = async (req, res) => {
   const traineeAccounts = await AccountService.findAllByRole('trainee');
   const categories = await CourseCategoryService.findAllCategories();
+  const courses = await CourseService.findAllCourses();
 
   res.render('templates/master', { 
     title: 'Staff page', 
     content: '../trainingStaff_view/index',
     traineeAccounts,
-    categories
+    categories,
+    courses
   });
 }
 

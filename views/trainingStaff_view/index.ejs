@@ -77,5 +77,45 @@
     </tbody>
   </table>
 
+  <br>
+
+  <table class="table" id="table_3">
+    <a href="/staff/createCourse" class="btn btn-success">Create course</a>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Category</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% courses.forEach(course => { %>
+        <tr>
+          <th scope="row">
+            <%= course.id %>
+          </th>
+          <td>
+            <%= course.name %>
+          </td>
+          <td>
+            <%= course.description %>
+          </td>
+          <td>
+            <%= course.CourseCategory.name %>
+          </td>
+          <td>
+            <a href="/staff/updateCourse/<%= course.id%>" class="btn btn-warning">Update</a>
+          </td>
+          <td>
+            <a href="/staff/deleteCourse/<%= course.id%>" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
 
 </div>

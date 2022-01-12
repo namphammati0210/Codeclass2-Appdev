@@ -1,5 +1,5 @@
 const database = require('../database/models/index');
-const { Course } = database.db;
+const { Course, CourseCategory } = database.db;
 
 const create = async (data) => {
   const course = await Course.create(data);
@@ -7,7 +7,8 @@ const create = async (data) => {
 }
 
 const findAllCourses = async () => {
-  const categories = await Course.findAll();
+  const categories = await Course.findAll({include: CourseCategory});
+  console.log("🚀 ~ file: courseService.js ~ line 11 ~ findAllCourses ~ categories", categories)
   return categories;
 }
 
@@ -31,9 +32,18 @@ const update = async (id, data) => {
   return updatedTrainee;
 }
 
+const deleteById = async (id) => {
+  await Course.destroy({
+    where: {
+      id
+    }
+  });
+}
+
 module.exports = {
   create,
   findAllCourses,
   findById,
-  update
+  update,
+  deleteById
 }
