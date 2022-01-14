@@ -27,8 +27,17 @@ const create = async (req, res) => {
   }
 }
 
+const destroy = async(req, res) => {
+  const {categoryId} = req.params;
+
+  const deletedTrainer = await CourseCategoryService.deleteById(categoryId);
+
+  res.redirect('/staff'); 
+}
+
 
 module.exports = {
   renderCreateView,
   create,
+  destroy
 }

@@ -22,6 +22,8 @@ router.get('/createCourseCategory', CourseCategoryController.renderCreateView);
 
 router.post('/addCourseCategory', CourseCategoryController.create);
 
+router.get('/deleteCourseCategory/:categoryId', CourseCategoryController.destroy)
+
 // Course section
 router.get('/createCourse', CourseController.renderCreateView);
 

@@ -31,9 +31,20 @@ const update = async (id, data) => {
   return updatedTrainee;
 }
 
+const deleteById = async (categoryId) => {
+  const deletedCategory = await CourseCategory.destroy({
+    where: {
+      id: categoryId
+    }
+  })
+
+  return deletedCategory;
+}
+
 module.exports = {
   create,
   findAllCategories,
   findById,
-  update
+  update,
+  deleteById
 }
