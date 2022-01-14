@@ -39,8 +39,42 @@ const destroy = async(req, res) => {
 
   res.redirect('/staff'); 
 }
+
+const renderUpdateView = async(req, res) => {
+  const { courseId } = req.params;
+  const course = await CourseService.findById(courseId);
+
+  const selectedCategory = course.CourseCategory;
+
+  const categories = await CourseCategoryService.findAllCategories();
+
+  const filteredCategories = categories.filter(category => category.name !== selectedCategory.name);
+  
+  res.render('templates/master', { 
+    title: 'Update course page',
+    content: '../course_view/update',
+    course,
+    filteredCategories
+  });
+}
+
+const update = async (req, res) => {
+  const { id, name, description, courseCategoryId } = req.body;
+
+  const data = {
+    name,
+    description,
+    courseCategoryId
+  }
+
+  const updatedCourse = await CourseService.update(id, data);
+
+  res.redirect('/staff');
+}
 module.exports = {
   renderCreateView,
   create,
-  destroy
+  destroy,
+  renderUpdateView,
+  update
 }

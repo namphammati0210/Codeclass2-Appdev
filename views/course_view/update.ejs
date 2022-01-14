@@ -1,0 +1,38 @@
+<form action="/staff/updateCourse" method="POST">
+  <div class="form-group" style="display: none;">
+    <label for="exampleInputPassword1">ID</label>
+    <input type="text" class="form-control" id="exampleInputPassword1"
+      name="id"
+      value="<%= course.id %>"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Name</label>
+    <input type="text" class="form-control" id="exampleInputPassword1"
+      name="name"
+      value="<%= course.name %>"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Description</label>
+    <input type="text" class="form-control" id="exampleInputPassword1"
+      name="description"
+      value="<%= course.description %>"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Course category</label>
+    <select class="form-control" name="courseCategoryId">
+      <option value="<%= course.CourseCategory.id %>"><%= course.CourseCategory.name %></option>
+      <% filteredCategories.forEach(filteredCategory => { %>
+        <option value="<%= filteredCategory.id %>"><%= filteredCategory.name %></option>
+      <% }); %>
+    </select>
+  </div>
+  
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

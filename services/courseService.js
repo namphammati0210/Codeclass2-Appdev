@@ -13,17 +13,18 @@ const findAllCourses = async () => {
 }
 
 const findById = async (id) => {
-  const trainee = await Trainee.findOne({
+  const course = await Course.findOne({
     where: {
       id
-    }
+    },
+    include: CourseCategory
   })
 
-  return trainee;
+  return course;
 }
 
 const update = async (id, data) => {
-  const updatedTrainee = await Trainee.update(data, {
+  const updatedTrainee = await Course.update(data, {
     where: {
       id
     }

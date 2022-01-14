@@ -31,4 +31,8 @@ router.post('/addCourse', CourseController.create);
 
 router.get('/deleteCourse/:courseId', CourseController.destroy);
 
+router.get('/updateCourse/:courseId', CourseController.renderUpdateView);
+
+router.post('/updateCourse', CourseController.update);
+
 module.exports = router;
