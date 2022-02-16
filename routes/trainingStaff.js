@@ -4,6 +4,7 @@ const TraineeController = require('../controllers/traineeController');
 const TrainingStaffController = require('../controllers/trainingStaffController');
 const CourseCategoryController = require('../controllers/courseCategoryController');
 const CourseController = require('../controllers/courseController');
+const TrainerController = require('../controllers/trainerController');
 
 /* GET home page. */
 router.get('/', TrainingStaffController.index);
@@ -34,5 +35,10 @@ router.get('/deleteCourse/:courseId', CourseController.destroy);
 router.get('/updateCourse/:courseId', CourseController.renderUpdateView);
 
 router.post('/updateCourse', CourseController.update);
+
+// Assign trainer into course
+router.get('/assignTrainer', TrainerController.assignTrainer);
+
+router.post('/addTrainerCourse', TrainerController.addTrainerCourse);
 
 module.exports = router;

@@ -3,6 +3,8 @@ const sequelize = database.db.sequelize;
 const RoleService = require('../services/roleService');
 const TrainerService = require('../services/trainerService');
 const AccountService = require('../services/accountService');
+const CourseService = require('../services/courseService');
+const TrainerCourseService = require('../services/trainerCourseService');
 
 const renderCreateView = async (req, res) => {
   const trainerRole = await RoleService.findRoleByName('trainer');
@@ -74,9 +76,44 @@ const destroy = async(req, res) => {
   res.redirect('/admin'); 
 }
 
+const assignTrainer = async(req, res, next) => {
+  try {
+    const trainers = await TrainerService.findAllTrainers();
+    const courses = await CourseService.findAllCourses();
+
+    return res.render('templates/master', { 
+      title: 'Assign trainer page',
+      content: '../assignTrainer_view/create',
+      trainers,
+      courses
+    }); // ctrl + alt + l
+  } catch (error) {
+    console.log("🚀 ~ file: trainerController.js ~ line 83 ~ assignTrainer ~ error", error)
+    next(error)
+  }
+}
+
+const addTrainerCourse = async (req, res, next) => {
+  // return res.send(req.body);
+  try {
+    const { trainerId, courseId } = req.body;
+    const trainerCourse = await TrainerCourseService.assignTrainerIntoCourse(trainerId, courseId);
+    
+    if(!trainerCourse) res.redirect('/staff/assignTrainer');
+
+    res.redirect('/staff');
+
+  } catch (error) {
+    console.log("🚀 ~ file: trainerController.js ~ line 106 ~ addTrainerCourse ~ error", error)
+    res.redirect('/staff/assignTrainer');
+  }
+}
+
 module.exports = {
   renderCreateView,
   create,
   view,
-  destroy
+  destroy,
+  assignTrainer,
+  addTrainerCourse
 }
