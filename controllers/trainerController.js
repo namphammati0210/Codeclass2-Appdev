@@ -109,11 +109,26 @@ const addTrainerCourse = async (req, res, next) => {
   }
 }
 
+const deleteTrainerCourse = async(req, res, next) => {
+  try {
+    const { trainerId, courseId } = req.params;
+
+    const deleted = await TrainerCourseService.removeAssignedTrainer(trainerId, courseId);
+    console.log("🚀 ~ file: trainerController.js ~ line 117 ~ deleteTrainerCourse ~ deleted", deleted)
+
+    return res.redirect('/staff');
+  } catch (error) {
+    console.log("🚀 ~ file: trainerController.js ~ line 120 ~ deleteTrainerCourse ~ error", error)
+    return res.redirect('/staff');
+  }
+}
+
 module.exports = {
   renderCreateView,
   create,
   view,
   destroy,
   assignTrainer,
-  addTrainerCourse
+  addTrainerCourse,
+  deleteTrainerCourse
 }

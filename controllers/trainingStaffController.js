@@ -5,18 +5,21 @@ const AccountService = require('../services/accountService');
 const TrainingStaffService = require('../services/trainingStaffService');
 const CourseCategoryService = require('../services/courseCategoryService');
 const CourseService = require('../services/courseService');
+const TrainerCourseService = require('../services/trainerCourseService');
 
 const index = async (req, res) => {
   const traineeAccounts = await AccountService.findAllByRole('trainee');
   const categories = await CourseCategoryService.findAllCategories();
   const courses = await CourseService.findAllCourses();
+  const assignedTrainers = await TrainerCourseService.getAssignedTrainers();
 
   res.render('templates/master', { 
     title: 'Staff page', 
     content: '../trainingStaff_view/index',
     traineeAccounts,
     categories,
-    courses
+    courses,
+    assignedTrainers
   });
 }
 

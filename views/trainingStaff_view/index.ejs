@@ -117,5 +117,36 @@
     </tbody>
   </table>
 
-
+  <table class="table" id="table_4">
+    <a href="/staff/assignTrainer" class="btn btn-success">Assign trainer</a>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Trainer</th>
+        <th scope="col">Course</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% assignedTrainers.forEach(assignedTrainer => { %>
+        <tr>
+          <td>
+            <%= assignedTrainer.Trainer.fullname %>
+          </td>
+          <td>
+            <%= assignedTrainer.Course.name %>
+          </td>
+         
+          <td>
+            <a href="" class="btn btn-warning">Update</a>
+          </td>
+          <td>
+            <a 
+            href="/staff/deleteTrainerCourse/<%= assignedTrainer.Trainer.id %>/<%= assignedTrainer.Course.id %>" 
+            class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
 </div>
