@@ -38,8 +38,32 @@ const removeAssignedTrainer = async ( trainerId, courseId ) => {
   }
 }
 
+const updateAssignedTrainer = async ( trainerId, courseId, selectedTrainerId, selectedCourseId ) => {
+  console.log(trainerId, courseId, selectedTrainerId, selectedCourseId);
+  try {
+    const result = await TrainerCourse.update(
+      {
+        trainerId,
+        courseId
+      },
+      {
+        where: {
+          trainerId: selectedTrainerId,
+          courseId: selectedCourseId
+        }
+      }
+    );
+    console.log("🚀 ~ file: trainerCourseService.js ~ line 49 ~ updateAssignedTrainer ~ result", result)
+    return result;
+  } catch (error) {
+    console.log("🚀 ~ file: trainerCourseService.js ~ line 51 ~ updateAssignedTrainer ~ error", error)
+    return error;
+  }
+}
+
 module.exports = {
   assignTrainerIntoCourse,
   getAssignedTrainers,
-  removeAssignedTrainer
+  removeAssignedTrainer,
+  updateAssignedTrainer
 }

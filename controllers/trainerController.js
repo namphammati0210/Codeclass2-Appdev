@@ -145,7 +145,14 @@ const renderUpdateTrainerCourse = async(req, res, next) => {
 }
 
 const updateTrainerCourse = async (req, res, next) => {
-
+  const { trainerId, courseId } = req.body;
+  const { selectedTrainerId, selectedCourseId } = req.query;
+  // return res.send(req.query);
+  // return res.send(req.body)
+  const trainerCourse = 
+    await TrainerCourseService.updateAssignedTrainer(trainerId, courseId, selectedTrainerId, selectedCourseId);
+  
+  res.redirect('/staff');
 }
 module.exports = {
   renderCreateView,
