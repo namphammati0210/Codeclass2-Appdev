@@ -123,6 +123,30 @@ const deleteTrainerCourse = async(req, res, next) => {
   }
 }
 
+const renderUpdateTrainerCourse = async(req, res, next) => {
+  const { trainerId, courseId } = req.params;
+   
+  const selectedTrainer = await TrainerService.findTrainerById(trainerId);
+  const selectedCourse = await CourseService.findById(courseId);
+  const unassignedTrainers = await TrainerService.findUnassignedTrainers(selectedTrainer.id);
+  const unassignedCourses = await CourseService.findUnassignedCoures(selectedCourse.id);
+
+  // return res.send(unassignedCourses);
+  
+
+  res.render('templates/master', { 
+    title: 'Update assign trainer page',
+    content: '../assignTrainer_view/update',
+    selectedTrainer,
+    selectedCourse,
+    unassignedTrainers,
+    unassignedCourses
+  });
+}
+
+const updateTrainerCourse = async (req, res, next) => {
+
+}
 module.exports = {
   renderCreateView,
   create,
@@ -130,5 +154,7 @@ module.exports = {
   destroy,
   assignTrainer,
   addTrainerCourse,
-  deleteTrainerCourse
+  deleteTrainerCourse,
+  updateTrainerCourse,
+  renderUpdateTrainerCourse
 }

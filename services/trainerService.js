@@ -36,9 +36,26 @@ const create = async (data, transaction) => {
   return trainer;
 }
 
+const findUnassignedTrainers = async ( selectedTrainerId ) => {
+  try {
+    const trainers = await Trainer.findAll({
+      where: {
+        [database.db.Sequelize.Op.not]: {
+          id: selectedTrainerId
+        }
+      }
+    });
+    return trainers;
+  } catch (error) {
+    console.log("🚀 ~ file: trainerService.js ~ line 50 ~ findUnassignedTrainers ~ error", error)
+    return error;
+  }
+}
+
 module.exports = {
   findTrainerById,
   deleteById,
   create,
-  findAllTrainers
+  findAllTrainers,
+  findUnassignedTrainers
 }

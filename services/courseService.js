@@ -41,10 +41,27 @@ const deleteById = async (id) => {
   });
 }
 
+const findUnassignedCoures = async ( selectedCourseId ) => {
+  try {
+    const courses = await Course.findAll({
+      where: {
+        [database.db.Sequelize.Op.not]: {
+          id: selectedCourseId
+        }
+      }
+    });
+    return courses;
+  } catch (error) {
+    console.log("🚀 ~ file: courseService.js ~ line 55 ~ findUnassignedCoures ~ error", error)
+    return error;
+  }
+}
+
 module.exports = {
   create,
   findAllCourses,
   findById,
   update,
-  deleteById
+  deleteById,
+  findUnassignedCoures
 }

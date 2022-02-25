@@ -43,4 +43,6 @@ router.post('/addTrainerCourse', TrainerController.addTrainerCourse);
 
 router.get('/deleteTrainerCourse/:trainerId/:courseId', TrainerController.deleteTrainerCourse);
 
+router.get('/updateTrainerCourse/:trainerId/:courseId', TrainerController.renderUpdateTrainerCourse);
+
 module.exports = router;
